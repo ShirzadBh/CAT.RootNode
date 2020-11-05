@@ -2,6 +2,7 @@ from itertools import islice
 
 from PySide2.QtWidgets import QLabel, QPlainTextEdit, QHBoxLayout, QVBoxLayout, QWidget, QDialog, QPushButton
 from pymxs import runtime as mxs
+from PySide2 import QtCore
 import pymxs
 
 class RootNode(QDialog):
