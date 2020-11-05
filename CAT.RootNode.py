@@ -5,7 +5,7 @@ from pymxs import runtime as mxs
 import pymxs
 
 class RootNode(QDialog):
-    def __init__(self, parent=QWidget.find(rt.windows.getMAXHWND())):
+    def __init__(self, parent=QWidget.find(mxs.windows.getMAXHWND())):
         QDialog.__init__(self, parent)
         self.setWindowFlags(QtCore.Qt.Tool)
 
