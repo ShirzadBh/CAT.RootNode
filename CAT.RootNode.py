@@ -30,16 +30,12 @@ class RootNode(QDialog):
         self.recreationbtn.clicked.connect(self.recreate)
         self.skinTransfer.clicked.connect(self.startTransfer)
 
-        self.lw_skiin.itemClicked.connect(self.test)
+        self.lw_skiin.itemClicked.connect(self.changeSelection)
 
-    def test(self):
+    def changeSelection(self):
         item = self.lw_skiin.selectedItems()
-
         num = self.lw_skiin.row(item[0])
-        print(self.lw_skiin.row(item[0]))
-        print(self.skinMeshes[num][0])
         mxs.select(self.skinMeshes[num][0])
-
         mxs.modPanel.setCurrentObject(self.skinMeshes[num][1])
 
     def clearNodesInNodeList(self):
@@ -69,7 +65,7 @@ class RootNode(QDialog):
                 oldSkin.enabled = False
 
                 skinMod = mxs.Skin()
-                skinMod.name = "Transdered Skin"
+                skinMod.name = "Transfered Skin"
 
                 mxs.addModifier(i[0], skinMod, before=i[2] - 1)
 
@@ -429,6 +425,13 @@ class RootNode(QDialog):
         self.skinTransfer = QPushButton("Skin Transfer")
         self.layout.addWidget(self.skinTransfer)
         self.skinTransfer.setMinimumHeight(32)
+
+
+        label = QLabel()
+        label.setText("<a href=\"https://www.artstation.com/shirzadbh/store\">Python Script By: Shirzad Bahrami</a>")
+        label.setOpenExternalLinks(True)
+
+        self.layout.addWidget(label)
 
         self.setLayout(self.layout)
         self.layout.setMargin(4)
