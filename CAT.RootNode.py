@@ -192,11 +192,11 @@ class RootNode(QDialog):
                     print(self.skinMeshes)
 
                 else:
-                    print("asdfasdf")
+                    pass
 
             except:
 
-                print("Error")
+                pass
 
         else:
             pass
