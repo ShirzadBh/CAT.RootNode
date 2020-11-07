@@ -24,5 +24,8 @@
   * Also the position and rotation of the new nodes are constrained to the CAT bones
 ---
 ![](img/3.jpg)
-### 3. Adding the CAT nodes:
-  * Press the **Add Nodes** button to add CAT bones to the node list
+### 5. Adding the Models with Skin Modifier:
+  * Now Select the mesh and in the **modify** panel select the skin modifer and press the **Add Skin**
+  * If your character has more than one object with skins repeat the process and add all of them to the list
+  * If you have selected wrong model you are able to select it in the list and remove selected from the **Skin List**
+  * By selecting the object in the **Skin List** 3Ds Max will select them
