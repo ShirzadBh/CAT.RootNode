@@ -1,6 +1,6 @@
 # CAT.RootNode
-Transfer the CAT rig to a new rig structure with a root bone and transfered skins.
-![](img/4.gif)
+## Transfer the CAT rig to a new rig structure with a root bone and transfered skins.
+![](img/0.gif)
 
 ---
 ## How To Use:
@@ -21,4 +21,8 @@ Transfer the CAT rig to a new rig structure with a root bone and transfered skin
 ### 4. Recreating the rig structure:
   * By pressing the **Recreation** button, create new bones with a root bone
   * New nodes have the same name/color/position
-  * Also the position and rotation of the new nodes are constrained to the CAT nodes
+  * Also the position and rotation of the new nodes are constrained to the CAT bones
+---
+![](img/3.jpg)
+### 3. Adding the CAT nodes:
+  * Press the **Add Nodes** button to add CAT bones to the node list
