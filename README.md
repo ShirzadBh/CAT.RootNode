@@ -1,5 +1,5 @@
 # CAT.RootNode
-## Transfer the CAT rig to a new rig structure with a root bone and transfer the skins.
+## Transfer the CAT rig and skins to a new rig structure with a root bone
 ![](img/0.gif)
 
 ---
