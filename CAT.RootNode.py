@@ -1,10 +1,7 @@
-import random
-from itertools import islice
-
 import pymxs
 from PySide2 import QtCore
 from PySide2.QtGui import QColor
-from PySide2.QtWidgets import QAbstractItemView, QFrame, QListWidget, QLabel, QPlainTextEdit, QHBoxLayout, QVBoxLayout, \
+from PySide2.QtWidgets import QAbstractItemView, QFrame, QListWidget, QHBoxLayout, QVBoxLayout, \
     QWidget, QDialog, QPushButton
 from pymxs import runtime as mxs
 
@@ -26,18 +23,29 @@ class RootNode(QDialog):
 
         self.addNodes.clicked.connect(self.addNode)
         self.removeNodes.clicked.connect(self.clearNodesInNodeList)
-        
+
         self.addbtn.clicked.connect(self.addMod)
         self.removebtn.clicked.connect(self.removeMod)
-        
+
         self.recreationbtn.clicked.connect(self.recreate)
         self.skinTransfer.clicked.connect(self.startTransfer)
+
+        self.lw_skiin.itemClicked.connect(self.test)
+
+    def test(self):
+        item = self.lw_skiin.selectedItems()
+
+        num = self.lw_skiin.row(item[0])
+        print(self.lw_skiin.row(item[0]))
+        print(self.skinMeshes[num][0])
+        mxs.select(self.skinMeshes[num][0])
+
+        mxs.modPanel.setCurrentObject(self.skinMeshes[num][1])
 
     def clearNodesInNodeList(self):
         self.result = []
         self.writeInNodeList()
-        
-        
+
     def startTransfer(self):
         mxs.execute("max create mode")
 
@@ -72,19 +80,16 @@ class RootNode(QDialog):
                 mxs.selectmore(skinSource)
                 mxs.skinUtils.ImportSkinDataNoDialog(True, False, False, False, False, 1.0, 0)
 
-
                 mxs.delete(skinSource)
                 mxs.clearSelection()
 
-        
         mxs.execute("max modify mode")
 
     def recreate(self):
 
         with pymxs.undo(True):
-            
-            if len(self.result) > 0:
 
+            if len(self.result) > 0:
                 self.newNodes = []
                 self.dict = {}
                 temp = mxs.Array()
@@ -149,7 +154,6 @@ class RootNode(QDialog):
 
             mxs.select(temp)
 
-        
         mxs.redrawViews()
 
     def addMod(self):
@@ -179,7 +183,6 @@ class RootNode(QDialog):
         item = self.lw_skiin.selectedItems()
         allowed = mxs.readvalue(mxs.StringStream('Skin'))
 
-
         if mxs.classOf(mxs.modPanel.getCurrentObject()) == allowed:
             try:
                 node = mxs.selection[0]
@@ -189,20 +192,20 @@ class RootNode(QDialog):
                 if [node, mod, modID] in self.skinMeshes:
                     print(self.skinMeshes)
                     self.skinMeshes.remove([node, mod, modID])
-                    self.lw_skiin.takeItem(self.lw_skiin.row(item[0]))                   
+                    self.lw_skiin.takeItem(self.lw_skiin.row(item[0]))
                     print(self.skinMeshes)
 
                 else:
                     print("asdfasdf")
+
             except:
-                
+
                 print("Error")
 
         else:
             pass
             # print("Select Skin Modifier")
-        
-        
+
     def addNode(self):
         # Find Selection as a List
         nodes = mxs.selection
@@ -313,7 +316,6 @@ class RootNode(QDialog):
 
                 self.result = new
 
-            
                 self.writeInNodeList(self.result)
                 '''
                 index = 0
@@ -330,7 +332,7 @@ class RootNode(QDialog):
                         self.lw_selectedNodes.item(index).setForeground(QColor.fromRgb(240, 240, 240))
                     index += 1
                 '''
-                
+
             def debug():
                 print(f"#{len(nodes)} | All selected")
                 print(f"#{len(nodes_in_chain)} | Node in Chain", nodes_in_chain)
@@ -354,13 +356,12 @@ class RootNode(QDialog):
             # debug() # Last
 
             mxs.escapeEnable = True
-            
-            
+
     def writeInNodeList(self, new=[]):
-        
+
         if len(self.result) < 1:
             self.lw_selectedNodes.clear()
-            
+
         index = 0
         # print(len(self.result))
         for i in new:
