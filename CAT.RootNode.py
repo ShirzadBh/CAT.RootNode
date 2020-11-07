@@ -1,7 +1,7 @@
 import pymxs
 from PySide2 import QtCore
 from PySide2.QtGui import QColor
-from PySide2.QtWidgets import QAbstractItemView, QFrame, QListWidget, QHBoxLayout, QVBoxLayout, \
+from PySide2.QtWidgets import QLabel, QAbstractItemView, QFrame, QListWidget, QHBoxLayout, QVBoxLayout, \
     QWidget, QDialog, QPushButton
 from pymxs import runtime as mxs
 
