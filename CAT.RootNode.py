@@ -25,12 +25,22 @@ class RootNode(QDialog):
         self.skinMeshes = []
 
         self.addNodes.clicked.connect(self.addNode)
+        self.removeNodes.clicked.connect(self.clearNodesInNodeList)
+        
         self.addbtn.clicked.connect(self.addMod)
+        self.removebtn.clicked.connect(self.removeMod)
+        
         self.recreationbtn.clicked.connect(self.recreate)
         self.skinTransfer.clicked.connect(self.startTransfer)
 
+    def clearNodesInNodeList(self):
+        self.result = []
+        self.writeInNodeList()
+        
+        
     def startTransfer(self):
-        mxs.disableSceneRedraw()
+        mxs.execute("max create mode")
+
         with pymxs.undo(True):
 
             for i in self.skinMeshes:
@@ -51,6 +61,7 @@ class RootNode(QDialog):
                 oldSkin.enabled = False
 
                 skinMod = mxs.Skin()
+                skinMod.name = "Transdered Skin"
 
                 mxs.addModifier(i[0], skinMod, before=i[2] - 1)
 
@@ -61,28 +72,33 @@ class RootNode(QDialog):
                 mxs.selectmore(skinSource)
                 mxs.skinUtils.ImportSkinDataNoDialog(True, False, False, False, False, 1.0, 0)
 
+
                 mxs.delete(skinSource)
                 mxs.clearSelection()
 
-        mxs.enableSceneRedraw()
+        
+        mxs.execute("max modify mode")
 
     def recreate(self):
-        mxs.disableSceneRedraw()
-        with pymxs.undo(True):
-            self.newNodes = []
-            self.dict = {}
-            temp = mxs.Array()
-            lastNode = None
-            index = 0
 
-            rootNode = mxs.point()
-            rootNode.size = 2
-            rootNode.showlinks = True
-            rootNode.Box = True
-            rootNode.cross = False
-            rootNode.axistripod = False
-            rootNode.centermarker = False
-            mxs.join(temp, rootNode)
+        with pymxs.undo(True):
+            
+            if len(self.result) > 0:
+
+                self.newNodes = []
+                self.dict = {}
+                temp = mxs.Array()
+                lastNode = None
+                index = 0
+
+                rootNode = mxs.point()
+                rootNode.size = 2
+                rootNode.showlinks = True
+                rootNode.Box = True
+                rootNode.cross = False
+                rootNode.axistripod = False
+                rootNode.centermarker = False
+                mxs.join(temp, rootNode)
 
             def create_constraints(node, nNode):
                 # Position
@@ -105,7 +121,7 @@ class RootNode(QDialog):
                 posConstraintInterface = posCtrl.constraints
                 posConstraintInterface.appendTarget(node, 100)
 
-            for i in self.selectedNodes:
+            for i in self.result:
                 # Create new nodes and add them to list and dict
                 nNode = mxs.point()
                 nNode.showlinks = True
@@ -132,9 +148,9 @@ class RootNode(QDialog):
                 index += 1
 
             mxs.select(temp)
-            mxs.CompleteRedraw()
 
-        mxs.enableSceneRedraw()
+        
+        mxs.redrawViews()
 
     def addMod(self):
         allowed = mxs.readvalue(mxs.StringStream('Skin'))
@@ -152,11 +168,41 @@ class RootNode(QDialog):
                     self.lw_skiin.addItem("{} > {} > ID:{}".format(mxs.selection[0].name, mod, modID))
                     self.lw_skiin.item(self.lw_skiin.count() - 1).setBackground(QColor.fromRgb(60, 60, 60))
             except:
+                pass
+                # print("Error")
+
+        else:
+            pass
+            # print("Select Skin Modifier")
+
+    def removeMod(self):
+        item = self.lw_skiin.selectedItems()
+        allowed = mxs.readvalue(mxs.StringStream('Skin'))
+
+
+        if mxs.classOf(mxs.modPanel.getCurrentObject()) == allowed:
+            try:
+                node = mxs.selection[0]
+                mod = mxs.modPanel.getCurrentObject()
+                modID = mxs.modPanel.getModifierIndex(mxs.selection[0], mod)
+
+                if [node, mod, modID] in self.skinMeshes:
+                    print(self.skinMeshes)
+                    self.skinMeshes.remove([node, mod, modID])
+                    self.lw_skiin.takeItem(self.lw_skiin.row(item[0]))                   
+                    print(self.skinMeshes)
+
+                else:
+                    print("asdfasdf")
+            except:
+                
                 print("Error")
 
         else:
-            print("Select Skin Modifier")
-
+            pass
+            # print("Select Skin Modifier")
+        
+        
     def addNode(self):
         # Find Selection as a List
         nodes = mxs.selection
@@ -267,6 +313,9 @@ class RootNode(QDialog):
 
                 self.result = new
 
+            
+                self.writeInNodeList(self.result)
+                '''
                 index = 0
                 # print(len(self.result))
                 for i in new:
@@ -280,7 +329,8 @@ class RootNode(QDialog):
                     else:
                         self.lw_selectedNodes.item(index).setForeground(QColor.fromRgb(240, 240, 240))
                     index += 1
-
+                '''
+                
             def debug():
                 print(f"#{len(nodes)} | All selected")
                 print(f"#{len(nodes_in_chain)} | Node in Chain", nodes_in_chain)
@@ -304,6 +354,26 @@ class RootNode(QDialog):
             # debug() # Last
 
             mxs.escapeEnable = True
+            
+            
+    def writeInNodeList(self, new=[]):
+        
+        if len(self.result) < 1:
+            self.lw_selectedNodes.clear()
+            
+        index = 0
+        # print(len(self.result))
+        for i in new:
+
+            self.lw_selectedNodes.addItem(i.name)
+            color = i.wireColor
+            self.lw_selectedNodes.item(index).setBackground(QColor.fromRgb(color.r, color.g, color.b))
+
+            if ((color.r + color.g + color.b) / 3) > 127.5:
+                self.lw_selectedNodes.item(index).setForeground(QColor.fromRgb(60, 60, 60))
+            else:
+                self.lw_selectedNodes.item(index).setForeground(QColor.fromRgb(240, 240, 240))
+            index += 1
 
     def create(self):
         with pymxs.undo(True):
@@ -338,9 +408,11 @@ class RootNode(QDialog):
         self.layout.addWidget(line)
 
         self.objectsLayout = QHBoxLayout()
-        self.addbtn = QPushButton("Add Skin Mesh")
+        self.addbtn = QPushButton("Add Skin")
+        self.removebtn = QPushButton("Remove Skin")
 
         self.objectsLayout.addWidget(self.addbtn)
+        self.objectsLayout.addWidget(self.removebtn)
 
         self.layout.addLayout(self.objectsLayout)
 
