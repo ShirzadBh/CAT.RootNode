@@ -30,7 +30,7 @@
   * If you have selected the wrong model you are able to select it in the list and remove selected from the **Skin List**
   * By selecting the object in the **Skin List** 3Ds Max will select them
 ---
-![](img/4.jpg)
+![](img/4.gif)
 ### 7. Transfer the skin data:
   * Press the **Skin Transfer** button to transfer the skin data from the old modifier to a new one named **"Transferred Skin"**
   * Note that your old Skin modifier is still there but it's disabled
