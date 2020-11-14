@@ -81,8 +81,7 @@ class RootNode(QDialog):
 
         mxs.execute("max modify mode")
 
-    def recreate(self):
-
+    def old_recreate(self):
         with pymxs.undo(True):
 
             if len(self.result) > 0:
@@ -102,6 +101,7 @@ class RootNode(QDialog):
                 mxs.join(temp, rootNode)
 
             def create_constraints(node, nNode):
+
                 # Position
                 sub = mxs.getSubAnim(nNode, 3)
                 secsub = mxs.getSubAnim(sub, 1)
@@ -150,6 +150,73 @@ class RootNode(QDialog):
 
             mxs.select(temp)
 
+        mxs.redrawViews()
+
+    def recreate(self):
+        defaultSize = 2
+        bones = mxs.Array()
+
+        if len(self.result) > 0:
+            self.newNodes = []
+            self.dict = {}
+            temp = mxs.Array()
+            lastNode = None
+            index = 0
+
+            rootNode = mxs.BoneSys.createBone(mxs.point3(0, 0, 0), mxs.point3(0, 0, 1), mxs.point3(0, 0, 1))
+            rootNode.size = 2
+            mxs.join(temp, rootNode)
+
+        def create_constraints(node, nNode):
+            # Position
+            sub = mxs.getSubAnim(nNode, 3)
+            secsub = mxs.getSubAnim(sub, 1)
+            secsub.controller = mxs.Position_List()
+            posCtrl = mxs.Position_Constraint()
+            thirdsub = mxs.getSubAnim(secsub, 2)
+            thirdsub.controller = posCtrl
+            posConstraintInterface = posCtrl.constraints
+            posConstraintInterface.appendTarget(node, 100)
+
+            # Rotation
+            sub = mxs.getSubAnim(nNode, 3)
+            secsub = mxs.getSubAnim(sub, 2)
+            secsub.controller = mxs.rotation_list()
+            posCtrl = mxs.Orientation_Constraint()
+            thirdsub = mxs.getSubAnim(secsub, 2)
+            thirdsub.controller = posCtrl
+            posConstraintInterface = posCtrl.constraints
+            posConstraintInterface.appendTarget(node, 100)
+
+        for obj in self.result:
+            endPos = mxs.point3(0, 0, 0)
+
+            if obj.children.count > 0:
+                endPos = obj.children[0].transform.pos
+
+            else:
+                endPos = (mxs.transmatrix(mxs.point3(defaultSize, 0, 0)) * obj.transform).pos
+
+            zPos = (mxs.transmatrix(mxs.point3(0, 0, 1)) * obj.transform).pos
+            d = mxs.BoneSys.createBone(obj.transform.pos, endPos, zPos)
+            d.transform = obj.transform
+            d.name = obj.name
+            d.wirecolor = obj.wirecolor
+            mxs.join(bones, d)
+            self.dict[obj] = d
+            self.newNodes.append(obj)
+
+            # Create parent connections
+            if mxs.isValidNode(obj.parent):
+                d.parent = self.dict[obj.parent]
+
+            else:
+                d.parent = rootNode
+
+            create_constraints(obj, d)
+
+        mxs.select(bones)
+        mxs.selectmore(rootNode)
         mxs.redrawViews()
 
     def addMod(self):
@@ -207,9 +274,6 @@ class RootNode(QDialog):
         nodes = mxs.selection
 
         if len(nodes) > 0:
-
-            mxs.escapeEnable = False
-
             group_members = []
             group_heads = []
             head_root = []
@@ -351,10 +415,16 @@ class RootNode(QDialog):
             filter(self.ordered_selection_list)  # 8
             # debug() # Last
 
-            mxs.escapeEnable = True
+            group_members = []
+            group_heads = []
+            head_root = []
+            nodes_in_chain = []
+            independent_nodes = []
+            result_list = []
+            results_roots = []
+            self.ordered_selection_list = []
 
     def writeInNodeList(self, new=[]):
-
         if len(self.result) < 1:
             self.lw_selectedNodes.clear()
 
@@ -381,7 +451,6 @@ class RootNode(QDialog):
         self.close()
 
     def initUI(self):
-
         self.layout = QVBoxLayout()
 
         self.objectsLayout = QHBoxLayout()
@@ -425,7 +494,6 @@ class RootNode(QDialog):
         self.skinTransfer = QPushButton("Skin Transfer")
         self.layout.addWidget(self.skinTransfer)
         self.skinTransfer.setMinimumHeight(32)
-
 
         label = QLabel()
         label.setText("<a href=\"https://www.artstation.com/shirzadbh/store\">Python Script By: Shirzad Bahrami</a>")
