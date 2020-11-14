@@ -163,7 +163,8 @@ class RootNode(QDialog):
             lastNode = None
             index = 0
 
-            rootNode = mxs.BoneSys.createBone(mxs.point3(0, 0, 0), mxs.point3(0, 0, 1), mxs.point3(0, 0, 1))
+            rootNode = mxs.BoneSys.createBone(mxs.point3(0, 0, 0), mxs.point3(0, 1, 0), mxs.point3(0, 1, 0))
+            rootNode.transform = mxs.Matrix3(1)
             rootNode.size = 2
             mxs.join(temp, rootNode)
 
