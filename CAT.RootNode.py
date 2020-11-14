@@ -166,6 +166,7 @@ class RootNode(QDialog):
             rootNode = mxs.BoneSys.createBone(mxs.point3(0, 0, 0), mxs.point3(0, 1, 0), mxs.point3(0, 1, 0))
             rootNode.transform = mxs.Matrix3(1)
             rootNode.size = 2
+            rootNode.name = "rootBone"
             mxs.join(temp, rootNode)
 
         def create_constraints(node, nNode):
