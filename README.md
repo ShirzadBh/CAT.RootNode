@@ -36,3 +36,14 @@
   * Note that your old Skin modifier is still there but it's disabled
 ### 8. Enjoy!
   * Now each of your models has a new **"Transferred Skin"** and they are attached to the new nodes instead of CAT bones.
+  
+  
+>installation: 
+	Unzip the "CATRootNode.rar" inside C://ProgramData//Autodesk//ApplicationPlugins".
+	
+>How To Run: 
+	Now, it's a MacroScript, which you can assign a shortcut to it or search it using "X" in 3Ds Max.
+	
+>Supported Version:
+
+    2020 - 2021 - 2022
