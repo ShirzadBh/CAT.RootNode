@@ -49,7 +49,7 @@ class RootNode(QDialog):
 
             for i in self.skinMeshes:
                 skinSource = mxs.skinUtils.ExtractSkinData(i[0])
-                skinSource = mxs.getNodeByName(f"SkinData_{i[0].name}")
+                skinSource = mxs.getNodeByName("SkinData_{}".format(i[0].name))
 
                 count = mxs.skinOps.GetNumberBones(i[1])
                 newBones = []
@@ -169,26 +169,34 @@ class RootNode(QDialog):
             rootNode.name = "rootBone"
             mxs.join(temp, rootNode)
 
-        def create_constraints(node, nNode):
+        def new_create_constraints(node, nNode):
+
+            posList = mxs.position_list()  # Create Pos_List
+            const = mxs.Position_Constraint()  # Create  Pos_Constraint
+            const.appendTarget(nNode, 100)  # Add target to Constraint
+            secsub = mxs.setPropertyController(node.controller, "Position", posList)  # Add PosList to node
+            mxs.setPropertyController(secsub, 'Available', const)
+
+            posList = mxs.rotation_list()  # Create Pos_List
+            const = mxs.Orientation_Constraint()  # Create  Pos_Constraint
+            const.appendTarget(nNode, 100)  # Add target to Constraint
+            secsub = mxs.setPropertyController(node.controller, "Rotation", posList)  # Add PosList to node
+            mxs.setPropertyController(secsub, 'Available', const)
+
+        def create_constraints(nNode, node):
             # Position
-            sub = mxs.getSubAnim(nNode, 3)
-            secsub = mxs.getSubAnim(sub, 1)
-            secsub.controller = mxs.Position_List()
-            posCtrl = mxs.Position_Constraint()
-            thirdsub = mxs.getSubAnim(secsub, 2)
-            thirdsub.controller = posCtrl
-            posConstraintInterface = posCtrl.constraints
-            posConstraintInterface.appendTarget(node, 100)
+            posList = mxs.position_list()  # Create Pos_List
+            const = mxs.Position_Constraint()  # Create  Pos_Constraint
+            const.appendTarget(nNode, 100)  # Add target to Constraint
+            secsub = mxs.setPropertyController(node.controller, "Position", posList)  # Add PosList to node
+            mxs.setPropertyController(secsub, 'Available', const)
 
             # Rotation
-            sub = mxs.getSubAnim(nNode, 3)
-            secsub = mxs.getSubAnim(sub, 2)
-            secsub.controller = mxs.rotation_list()
-            posCtrl = mxs.Orientation_Constraint()
-            thirdsub = mxs.getSubAnim(secsub, 2)
-            thirdsub.controller = posCtrl
-            posConstraintInterface = posCtrl.constraints
-            posConstraintInterface.appendTarget(node, 100)
+            posList = mxs.rotation_list()  # Create Pos_List
+            const = mxs.Orientation_Constraint()  # Create  Pos_Constraint
+            const.appendTarget(nNode, 100)  # Add target to Constraint
+            secsub = mxs.setPropertyController(node.controller, "Rotation", posList)  # Add PosList to node
+            mxs.setPropertyController(secsub, 'Available', const)
 
         for obj in self.result:
             endPos = mxs.point3(0, 0, 0)
@@ -379,33 +387,6 @@ class RootNode(QDialog):
                 self.result = new
 
                 self.writeInNodeList(self.result)
-                '''
-                index = 0
-                # print(len(self.result))
-                for i in new:
-
-                    self.lw_selectedNodes.addItem(i.name)
-                    color = i.wireColor
-                    self.lw_selectedNodes.item(index).setBackground(QColor.fromRgb(color.r, color.g, color.b))
-
-                    if ((color.r + color.g + color.b) / 3) > 127.5:
-                        self.lw_selectedNodes.item(index).setForeground(QColor.fromRgb(60, 60, 60))
-                    else:
-                        self.lw_selectedNodes.item(index).setForeground(QColor.fromRgb(240, 240, 240))
-                    index += 1
-                '''
-
-            def debug():
-                print(f"#{len(nodes)} | All selected")
-                print(f"#{len(nodes_in_chain)} | Node in Chain", nodes_in_chain)
-                print(f"#{len(independent_nodes)} | Independent nodes", independent_nodes)
-                print(f"#{len(out_of_groups)} | Out of Group", out_of_groups)
-                print(f"#{len(group_members)} | Group members", group_members)
-                print(f"#{len(group_heads)} | Group heads", group_heads)
-                print(f"#{len(head_root)} | Head roots", head_root)
-                print(f"#{len(result_list)} | Result", result_list)
-                print(f"#{len(results_roots)} | Result roots", results_roots)
-                print(f"#{len(self.ordered_selection_list)} | Result in order", self.ordered_selection_list)
 
             find_group_members()  # 1
             find_group_heads()  # 2
@@ -415,7 +396,6 @@ class RootNode(QDialog):
             find_results_roots()  # 6
             put_in_ordered_list()  # 7
             filter(self.ordered_selection_list)  # 8
-            # debug() # Last
 
             group_members = []
             group_heads = []
