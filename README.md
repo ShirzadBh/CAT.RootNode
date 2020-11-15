@@ -37,7 +37,7 @@
 ### 8. Enjoy!
   * Now each of your models has a new **"Transferred Skin"** and they are attached to the new nodes instead of CAT bones.
   
-  
+---
 >installation: 
 	Unzip the "CATRootNode.rar" inside C://ProgramData//Autodesk//ApplicationPlugins".
 	
