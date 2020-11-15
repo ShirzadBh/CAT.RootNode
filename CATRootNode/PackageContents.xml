@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage
+    SchemaVersion="1.0"
+    AutodeskProduct="3ds Max"
+    ProductType="Application"
+    Name="CAT.RootNode"
+	Description="Transfer the CAT rig and skins to a new rig structure with a root bone"
+    AppVersion="1.0.0"
+	Author="Sherzad Bahrami"
+    ProductCode="{fd30187f-b941-4c30-b45d-75888b94d419}"
+    UpgradeCode="{601886ec-ecec-4063-a818-e3493545912f}">
+    <CompanyDetails Email="cgcenter.org@gmail.com" Name="CGcenter" Url="https://www.cgcenter.ir" />
+    <Components Description="post-start-up scripts parts">
+        <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2021" SeriesMax="2022" />
+        <ComponentEntry AppName="CAT.RootNode" Version="1.0.0" ModuleName="./Contents/2021.ms" />
+    </Components>
+    <Components Description="post-start-up scripts parts">
+        <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2020" SeriesMax="2020" />
+        <ComponentEntry AppName="CAT.RootNode" Version="1.0.0" ModuleName="./Contents/2020.ms" />
+    </Components>
+</ApplicationPackage>
