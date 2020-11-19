@@ -169,6 +169,20 @@ class RootNode(QDialog):
             rootNode.name = "rootBone"
             mxs.join(temp, rootNode)
 
+        def new_create_constraints(node, nNode):
+
+            posList = mxs.position_list()  # Create Pos_List
+            const = mxs.Position_Constraint()  # Create  Pos_Constraint
+            const.appendTarget(nNode, 100)  # Add target to Constraint
+            secsub = mxs.setPropertyController(node.controller, "Position", posList)  # Add PosList to node
+            mxs.setPropertyController(secsub, 'Available', const)
+
+            posList = mxs.rotation_list()  # Create Pos_List
+            const = mxs.Orientation_Constraint()  # Create  Pos_Constraint
+            const.appendTarget(nNode, 100)  # Add target to Constraint
+            secsub = mxs.setPropertyController(node.controller, "Rotation", posList)  # Add PosList to node
+            mxs.setPropertyController(secsub, 'Available', const)
+
         def create_constraints(nNode, node):
             # Position
             posList = mxs.position_list()  # Create Pos_List
