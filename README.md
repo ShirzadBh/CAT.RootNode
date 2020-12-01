@@ -1,7 +1,9 @@
 # CAT.RootNode
 ## Transfer the CAT rig and skins to a new rig structure with a root bone
 ![](img/0.gif)
-
+---
+## Video Tutorial:
+[![](img/tutorial.png)](https://youtu.be/LoPnY3QQsvU)
 ---
 ## How To Use:
 ![](img/1.jpg)
