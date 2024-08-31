@@ -1,10 +1,8 @@
-# Fork notes
-
-Just there so I could do a pull request to add support for 3ds Max 2023 & 2025
-
-
 # CAT.RootNode
-## Transfer the CAT rig and skins to a new rig structure with a root bone
+
+Recreates a rig structure out of a CAT rig and constraint the bone nodes to the CAT nodes and adds a rootBone. It can also transefer the skin modfier(s) from old CAT bones to the recreated bones.
+This makes the rig exportable to game engines.
+
 ![](img/0.gif)
 ---
 ## Video Tutorial:
@@ -48,12 +46,11 @@ Just there so I could do a pull request to add support for 3ds Max 2023 & 2025
 >Easy installation: 
 	Run "One-Click Installation.bat".
 	
->installation: 
+>Mnaual installation: 
 	Unzip the "CATRootNode.zip" inside "C://ProgramData//Autodesk//ApplicationPlugins".
 	
 >How To Run: 
 	Now, it's a MacroScript, which you can assign a shortcut to it or search it using "X" in 3Ds Max.
 	
 >Supported Version:
-
-    2020 - 2021 - 2022
+>2020, 2021, 2022, 2023, 2024, 2025
