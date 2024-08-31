@@ -478,7 +478,7 @@ class RootNode(QDialog):
         self.skinTransfer.setMinimumHeight(32)
 
         label = QLabel()
-        label.setText("<a href=\"https://www.artstation.com/shirzadbh/store\">Python Script By: Shirzad Bahrami</a>")
+        label.setText("<a href=\"https://shirzadbahrami.com\">Python Script By: Shirzad Bahrami</a>")
         label.setOpenExternalLinks(True)
 
         self.layout.addWidget(label)
