@@ -484,7 +484,7 @@ class RootNode(QDialog):
         self.layout.addWidget(label)
 
         self.setLayout(self.layout)
-        # self.layout.setMargin(4)
+        self.layout.setMargin(4)
 
 
 def main():

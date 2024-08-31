@@ -8,14 +8,14 @@
     AppVersion="1.0.0"
 	Author="Sherzad Bahrami"
     ProductCode="{fd30187f-b941-4c30-b45d-75888b94d419}"
-    UpgradeCode="{601886ec-ecec-4063-a818-e3493545912f}">
-    <CompanyDetails Email="cgcenter.org@gmail.com" Name="CGcenter" Url="https://www.cgcenter.ir" />
+    UpgradeCode="{88e6cbed-1b27-4d63-bec4-c5500f98c292}">
+    <CompanyDetails Email="cgcenter.org@gmail.com" Name="CGcenter" Url="https://shirzadbahrami.com" />
     <Components Description="post-start-up scripts parts">
         <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2025" SeriesMax="2025" />
         <ComponentEntry AppName="CAT.RootNode" Version="1.0.0" ModuleName="./Contents/2025.ms" />
     </Components>
     <Components Description="post-start-up scripts parts">
-        <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2021" SeriesMax="2022" />
+        <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2021" SeriesMax="2024" />
         <ComponentEntry AppName="CAT.RootNode" Version="1.0.0" ModuleName="./Contents/2021.ms" />
     </Components>
     <Components Description="post-start-up scripts parts">

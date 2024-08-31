@@ -2,15 +2,15 @@
 
 set productName=CATRootNode
 set developerName=Shirzad Bahrami
-set websiteAddress=www.cgcenter.ir
+set websiteAddress=www.shirzadbahrami.com
 
 set minVersion=2020
-set maxVersion=2022
+set maxVersion=2025
 
 set productVer=1.0.0
 
 set releaseDate=2020-11-4
-set lastUpdate=2020-11-27
+set lastUpdate=2024-8-31
 
 set fileName=CATRootNode.zip
 set installationPath=/Autodesk/ApplicationPlugins
