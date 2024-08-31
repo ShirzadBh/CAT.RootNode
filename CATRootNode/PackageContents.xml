@@ -11,6 +11,10 @@
     UpgradeCode="{601886ec-ecec-4063-a818-e3493545912f}">
     <CompanyDetails Email="cgcenter.org@gmail.com" Name="CGcenter" Url="https://www.cgcenter.ir" />
     <Components Description="post-start-up scripts parts">
+        <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2025" SeriesMax="2025" />
+        <ComponentEntry AppName="CAT.RootNode" Version="1.0.0" ModuleName="./Contents/2025.ms" />
+    </Components>
+    <Components Description="post-start-up scripts parts">
         <RuntimeRequirements OS="Win64" Platform="3ds Max" SeriesMin="2021" SeriesMax="2022" />
         <ComponentEntry AppName="CAT.RootNode" Version="1.0.0" ModuleName="./Contents/2021.ms" />
     </Components>

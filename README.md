@@ -1,3 +1,8 @@
+# Fork notes
+
+Just there so I could do a pull request to add support for 3ds Max 2023 & 2025
+
+
 # CAT.RootNode
 ## Transfer the CAT rig and skins to a new rig structure with a root bone
 ![](img/0.gif)
